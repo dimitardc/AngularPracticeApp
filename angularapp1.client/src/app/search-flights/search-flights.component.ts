@@ -41,7 +41,7 @@ export class SearchFlightsComponent {
   ]
 }
 
-export interface FlightRm {
+ export interface FlightRm {
   airline: string;
   arrival: TimePlaceRm;
   departure: TimePlaceRm;
@@ -49,7 +49,7 @@ export interface FlightRm {
   remainingNumberOfSeats: number;
 }
 
-export interface TimePlaceRm {
+ export interface TimePlaceRm {
   place: string;
   time: string;
 }

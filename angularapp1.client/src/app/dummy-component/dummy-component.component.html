@@ -1,1 +1,10 @@
-<p>dummy-component works!</p>
+<h3>dummy-component works!</h3>
+
+
+<div>
+  <div class="rows">
+    <div *ngFor="let d of dummyResult">
+      {{d.para1}} , {{d.x.place}}
+    </div>
+  </div>
+</div>

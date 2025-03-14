@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
+import { DummyComponentComponent } from './dummy-component/dummy-component.component';
 
 const routes: Routes = [
-  { path: '', component: SearchFlightsComponent, pathMatch: 'full' }
+  //this is the default route because path : '' 
+  { path: '', component: SearchFlightsComponent, pathMatch: 'full' },
+  //{ path: "", component: DummyComponentComponent, pathMatch: 'full' }
 
 ];
 

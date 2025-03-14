@@ -9,4 +9,27 @@ import { Component } from '@angular/core';
 })
 export class DummyComponentComponent {
 
+  dummyResult: ItemsRM [] = [
+    {
+      para1: "item1",
+      para2: "item2",
+      x : { place: "Skopje", time : "idk" }
+    },
+    {
+      para1: "item1",
+      para2: "item2",
+      x: { place: "Skopje", time: "idk" }
+    }
+  ]
+}
+
+export interface ItemsRM {
+  para1: string,
+  para2: string,
+  x: TimePlace
+}
+
+export interface TimePlace {
+  place: string;
+  time: string;
 }
