@@ -1,60 +1,65 @@
 <h5 class="text-md-center m-5"> Search flight</h5>
 
-<div class="m-5 d-grid gap-3">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-floating">
-        <input placeholder="From" class="form-control" />
-        <label class="text-primary form-label">From</label>
+
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+  <div class="m-5 d-grid gap-3">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input formControlName="from" placeholder="From" class="form-control" />
+          <label class="text-primary form-label">From</label>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input formControlName="destination" placeholder="To" class="form-control" />
+          <label class="text-primary form-label">To</label>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="form-floating">
-        <input placeholder="To" class="form-control" />
-        <label class="text-primary form-label">To</label>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input formControlName="fromDate" type="date" placeholder="From Date" class="form-control" />
+          <label class="text-primary form-label">From Date</label>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-floating">
+          <input formControlName="toDate" type="date" placeholder="To Date" class="form-control" />
+          <label class="text-primary form-label">To Date</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 text-end">
+        <label class="form-label text-primary mt-2 text-right">Number of passengers</label>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <div class="input-group-text">For</div>
+          <input formControlName="numberOfPassengers" class="form-control" type="number" placeholder="1" />
+          <div class="input-group-text">Passengers</div>
+          <!--When we click this, searchResult gets populated and the bottom part appears-->
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-floating">
-        <input type="date" placeholder="From Date" class="form-control" />
-        <label class="text-primary form-label">From Date</label>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="form-floating">
-        <input type="date" placeholder="To Date" class="form-control" />
-        <label class="text-primary form-label">To Date</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6 text-end">
-      <label class="form-label text-primary mt-2 text-right">Number of passengers</label>
-    </div>
-    <div class="col-md-6">
-      <div class="input-group">
-        <div class="input-group-text">For</div>
-        <input class="form-control" type="number" placeholder="1" />
-        <div class="input-group-text">Passengers</div>
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+</form>
 
 
 
 
+<!--At start its 0-->
 <div *ngFor="let flight of searchResult">
-  <div class="card text-dark m-4 text-center">
+  <div class="card text-dark m-5 text-center">
     <div class="card-body" style="background-color:#f3ebeb">
       <h5 class="card-title">{{flight.airline}}</h5>
       <div class="card-title" style="color:#ff3939">
@@ -71,17 +76,17 @@
             </div>
             <div class="col">
               <i class="fa-solid fa-location-dot">
-                {{flight.departure.place}}
+                {{flight.departure?.place}}
               </i>
             </div>
             <div class="col">
               <i class="fa-regular">
-                {{flight.departure.time | date}}
+                {{flight.departure?.time | date}}
               </i>
             </div>
             <div class="col">
               <i class="fa-regular  fa-clock">
-                {{flight.departure.time | date:"shortTime"}}
+                {{flight.departure?.time | date:"shortTime"}}
               </i>
             </div>
           </div>
@@ -96,7 +101,7 @@
 
             <i class="fas fa-usd">{{flight.price}}</i>
             <br />
-            <a class="btn btn-secondary btn-lg mt-2">
+            <a [routerLink]="['/book-flight',flight.id]" class="btn btn-secondary btn-lg mt-2">
               <i class="fas fa-ticket"> Book</i>
             </a>
           </div>
@@ -108,17 +113,17 @@
             </div>
             <div class="col">
               <i class="fa-solid fa-location-dot">
-                {{flight.arrival.place}}
+                {{flight.arrival?.place}}
               </i>
             </div>
             <div class="col">
               <i class="fa-regular">
-                {{flight.arrival.time | date}}
+                {{flight.arrival?.time | date}}
               </i>
             </div>
             <div class="col">
               <i class="fa-regular  fa-clock">
-                {{flight.arrival.time | date:"shortTime"}}
+                {{flight.arrival?.time | date:"shortTime"}}
               </i>
             </div>
           </div>

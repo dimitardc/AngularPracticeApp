@@ -1,55 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FlightService } from '../api/services/flight.service';
+import { FlightRm } from '../api/models/flight-rm';
+import { FormBuilder, FormGroup } from '@angular/forms'
 
+//because SearchFlightsComponent is a component, we can use the field searchResult in the html
 @Component({
   selector: 'app-search-flights',
   standalone: false,
-  
+
   templateUrl: './search-flights.component.html',
   styleUrl: './search-flights.component.css'
 })
-export class SearchFlightsComponent {
+export class SearchFlightsComponent implements OnInit {
 
-  searchResult: FlightRm[] = [
-    {
-      airline: "Airline A",
-      arrival: { place: "New York (JFK)", time: "2025-02-21T15:30:00Z" },
-      departure: { place: "Los Angeles (LAX)", time: "2025-02-21T12:00:00Z" },
-      price: "$300",
-      remainingNumberOfSeats: 5
-    },
-    {
-      airline: "Airline B",
-      arrival: { place: "London (LHR)", time: "2025-02-22T10:00:00Z" },
-      departure: { place: "Paris (CDG)", time: "2025-02-22T08:00:00Z" },
-      price: "$250",
-      remainingNumberOfSeats: 12
-    },
-    {
-      airline: "Airline C",
-      arrival: { place: "Tokyo (HND)", time: "2025-02-23T18:45:00Z" },
-      departure: { place: "Seoul (ICN)", time: "2025-02-23T16:30:00Z" },
-      price: "$400",
-      remainingNumberOfSeats: 8
-    },
-    {
-      airline: "Airline D",
-      arrival: { place: "Berlin (TXL)", time: "2025-02-24T22:15:00Z" },
-      departure: { place: "Madrid (MAD)", time: "2025-02-24T19:45:00Z" },
-      price: "$320",
-      remainingNumberOfSeats: 3
-    }
-  ]
-}
+  searchResult: FlightRm[] = []
+  searchForm !: FormGroup
 
- export interface FlightRm {
-  airline: string;
-  arrival: TimePlaceRm;
-  departure: TimePlaceRm;
-  price: string;
-  remainingNumberOfSeats: number;
-}
+  ngOnInit(): void {
 
- export interface TimePlaceRm {
-  place: string;
-  time: string;
+    this.searchForm = this.formBuilder.group({
+      from: [''],
+      destination: [''],
+      fromDate: [''],
+      toDate: [''],
+      numberOfPassengers: [1]
+    })
+    this.search();
+  } 
+
+  //dependency injection for the FlightService
+  constructor(private flightService: FlightService, private formBuilder: FormBuilder) {
+
+  }
+
+
+  search() {
+    this.flightService.searchFlight(this.searchForm.value).subscribe(response => this.searchResult = response, this.handleError)
+  }
+
+  private handleError(err: any) {
+    console.log("Response Error. Status: ", err.status);
+    console.log("Response Error. Status Text: ", err.statusText);
+    console.log(err);
+  }
+
 }
+import { from } from 'rxjs';
